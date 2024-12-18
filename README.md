@@ -2,7 +2,6 @@
 <img src="checkmate.png" width="250px">
 <h1>체크메이트</h1>
 
-<h3><a href="https://www.check-mate.site">🌐 데모 페이지 바로가기 ▶︎</a></h3>
 </div>
 
 <div align="center">
