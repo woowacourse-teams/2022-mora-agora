@@ -212,10 +212,14 @@ class AttendanceAcceptanceTest extends AcceptanceTest {
         final List<Long> userIds = saveUsers(createUsers());
         final Meeting meeting = MORAGORA.create();
         final int meetingId = saveMeeting(token, userIds, meeting);
+
         final LocalDate date = LocalDate.now();
-        final Event event = EVENT_WITHOUT_DATE.createEventOnDate(meeting, date);
+        final LocalTime time = LocalTime.of(10, 0);
+        final LocalDateTime now = LocalDateTime.of(date, time.plusMinutes(1));
+        final Event event = EVENT_WITHOUT_DATE.createEventOnDateAndTime(meeting, date, time);
 
         given(serverTimeManager.getDate()).willReturn(date);
+        given(serverTimeManager.getDateAndTime()).willReturn(now);
 
         saveEvents(token, List.of(event), (long) meetingId);
 
@@ -266,13 +270,16 @@ class AttendanceAcceptanceTest extends AcceptanceTest {
         final Long masterId = signUp(master);
         final String token = login(master);
         final LocalDate date = LocalDate.now();
+        final LocalTime time = LocalTime.of(10, 0);
+        final LocalDateTime now = LocalDateTime.of(date, time.plusMinutes(1));
 
         final List<Long> userIds = saveUsers(createUsers());
         final Meeting meeting = MORAGORA.create();
         final int meetingId = saveMeeting(token, userIds, meeting);
-        final Event event = EVENT_WITHOUT_DATE.createEventOnDate(meeting, date);
+        final Event event = EVENT_WITHOUT_DATE.createEventOnDateAndTime(meeting, date, time);
 
         given(serverTimeManager.getDate()).willReturn(date);
+        given(serverTimeManager.getDateAndTime()).willReturn(now);
         saveEvents(token, List.of(event), (long) meetingId);
 
         // when
